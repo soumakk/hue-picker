@@ -123,7 +123,9 @@ class ColorUtilsStatic {
 	public toRgb(value: string): IColor['rgb'] {
 		const rgb: string[] = value.match(/\d+(\.\d+)?/gu) ?? []
 
-		const [r, g, b, a] = Array.from({ length: 4 }).map((_, i) => clamp(+(rgb[i] ?? (i < 3 ? 0 : 1)), 0, i < 3 ? 255 : 1))
+		const [r, g, b, a] = Array.from({ length: 4 }).map((_, i) =>
+			clamp(+(rgb[i] ?? (i < 3 ? 0 : 1)), 0, i < 3 ? 255 : 1)
+		)
 
 		return { r, g, b, a }
 	}
@@ -131,7 +133,9 @@ class ColorUtilsStatic {
 	public toHsv(value: string): IColor['hsv'] {
 		const hsv: string[] = value.match(/\d+(\.\d+)?/gu) ?? []
 
-		const [h, s, v, a] = Array.from({ length: 4 }).map((_, i) => clamp(+(hsv[i] ?? (i < 3 ? 0 : 1)), 0, i ? (i < 3 ? 100 : 1) : 360))
+		const [h, s, v, a] = Array.from({ length: 4 }).map((_, i) =>
+			clamp(+(hsv[i] ?? (i < 3 ? 0 : 1)), 0, i ? (i < 3 ? 100 : 1) : 360)
+		)
 
 		return { h, s, v, a }
 	}
@@ -139,7 +143,9 @@ class ColorUtilsStatic {
 	public hex2rgb(hex: IColor['hex']): IColor['rgb'] {
 		hex = hex.slice(1)
 
-		let [r, g, b, a] = Array.from({ length: 4 }).map((_, i) => parseInt(hex.slice(i * 2, i * 2 + 2), 16))
+		let [r, g, b, a] = Array.from({ length: 4 }).map((_, i) =>
+			parseInt(hex.slice(i * 2, i * 2 + 2), 16)
+		)
 
 		a = Number.isNaN(a) ? 1 : a / 255
 
@@ -154,7 +160,13 @@ class ColorUtilsStatic {
 		const max = Math.max(r, g, b)
 		const d = max - Math.min(r, g, b)
 
-		const h = d ? (max === r ? (g - b) / d + (g < b ? 6 : 0) : max === g ? 2 + (b - r) / d : 4 + (r - g) / d) * 60 : 0
+		const h = d
+			? (max === r
+					? (g - b) / d + (g < b ? 6 : 0)
+					: max === g
+					? 2 + (b - r) / d
+					: 4 + (r - g) / d) * 60
+			: 0
 		const s = max ? (d / max) * 100 : 0
 		const v = max * 100
 

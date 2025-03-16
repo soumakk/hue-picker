@@ -17,8 +17,23 @@ function App() {
 			</div>
 			<div className="grid grid-cols-2 gap-8">
 				<div className="">
-					<ColorPicker height={400} color={color} onChange={(color) => setColor(ColorUtils.convert('rgb', color.rgb))} hideInput />
-					<CirclePicker width="100%" color={color.hex} onChangeComplete={(color) => setColor(ColorUtils.convert('hex', color.hex))} />
+					<ColorPicker
+						height={400}
+						color={color}
+						onChange={(color) => {
+							// console.log(color)
+							// console.log(ColorUtils.convert('hsv', color.hsv))
+							// console.log(ColorUtils.convert('rgb', color.rgb))
+							// console.log(ColorUtils.convert('hex', color.hex))
+							setColor(ColorUtils.convert('hsv', color.hsv))
+						}}
+						hideInput
+					/>
+					<CirclePicker
+						width="100%"
+						color={color.hex}
+						onChangeComplete={(color) => setColor(ColorUtils.convert('hex', color.hex))}
+					/>
 				</div>
 				<ColorInfo />
 			</div>
