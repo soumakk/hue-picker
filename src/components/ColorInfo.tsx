@@ -6,7 +6,7 @@ import RGBControls from './RGBControls'
 
 export default function ColorInfo() {
 	return (
-		<div className="px-4 space-y-5">
+		<div className="px-4 space-y-5 py-6">
 			<HexControls />
 			<RGBControls />
 			<HSVControls />
