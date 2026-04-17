@@ -3,29 +3,33 @@
 @tailwind utilities;
 
 @layer base {
-	html,
-	body {
-		@apply h-full w-full font-sans;
-	}
+    html,
+    body {
+        @apply h-full w-full font-sans;
+    }
 }
 
 .rcp-saturation {
-	border-radius: 0px;
+    border-radius: 0px;
 }
 
 .rcp-body {
-	background-color: white;
-	padding: 20px 0;
+    background-color: white;
+    padding: 20px 0;
 }
 
+/*.rcp-saturation-cursor {
+    transition: all 0.1s;
+}*/
+
 /* Chrome, Safari, Edge, Opera */
-input[type='number']::-webkit-outer-spin-button,
-input[type='number']::-webkit-inner-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
-input[type='number'] {
-	-moz-appearance: textfield;
+input[type="number"] {
+    -moz-appearance: textfield;
 }
