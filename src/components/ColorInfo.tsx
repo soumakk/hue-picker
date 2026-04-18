@@ -6,6 +6,7 @@ import HSVControls from "./HSVControls";
 import HexControls from "./HexControls";
 import OKLCHControls from "./OKLCHControls";
 import RGBControls from "./RGBControls";
+import ColorInput from "./ColorInputBox";
 
 const tabs = ["RGB", "HSV", "HEX", "GLSL", "OKLCH"];
 
@@ -20,7 +21,15 @@ export default function ColorInfo() {
 
   return (
     <div className="px-4 space-y-5 py-6">
-      <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
+      <ColorInput />
+
+      <RGBControls />
+      <GLSLControls />
+      <HSVControls />
+      <HexControls />
+      <OKLCHControls />
+
+      {/*<TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
         <TabList className=" rounded-xl h-10 flex items-center justify-between gap-5 bg-zinc-100 p-1">
           {tabs?.map((tab, idx) => (
             <Tab
@@ -28,18 +37,16 @@ export default function ColorInfo() {
               className="flex-1 flex items-center justify-center gap-1 h-full rounded-lg data-[selected]:bg-white data-[selected]:shadow-sm  outline-none font-medium text-sm"
             >
               {tab}
-              {/*<div className="h-5 w-5 bg-white flex items-center justify-center rounded-md">
-                {idx + 1}
-              </div>*/}
+
             </Tab>
           ))}
         </TabList>
         <TabPanels>
           <TabPanel>
-            <RGBControls />
+
           </TabPanel>
           <TabPanel>
-            <HSVControls />
+
           </TabPanel>
           <TabPanel>
             <HexControls />
@@ -51,7 +58,7 @@ export default function ColorInfo() {
             <OKLCHControls />
           </TabPanel>
         </TabPanels>
-      </TabGroup>
+      </TabGroup>*/}
 
       {/* <div className="flex items-center gap-4">
 				<p className="text-slate-500 font-semibold uppercase text-sm">cmyk</p>

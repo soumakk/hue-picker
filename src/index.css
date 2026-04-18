@@ -18,6 +18,37 @@
     padding: 20px 0;
 }
 
+.rcp-section {
+    gap: 20px;
+}
+
+.rcp-hue {
+    height: 20px;
+    border-radius: 100px;
+}
+.rcp-hue .rcp-hue-cursor {
+    height: 28px;
+    width: 28px;
+    border-radius: 100px;
+}
+
+.rcp-alpha {
+    height: 20px;
+    border-radius: 100px;
+}
+.rcp-alpha .rcp-alpha-cursor {
+    height: 28px;
+    width: 28px;
+}
+
+.circle-picker > span > div {
+    height: 80px !important;
+    width: 80px !important;
+}
+.circle-picker > span > div > span > div {
+    border-radius: 20px !important;
+}
+
 /*.rcp-saturation-cursor {
     transition: all 0.1s;
 }*/
