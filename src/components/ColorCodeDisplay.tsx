@@ -10,7 +10,7 @@ import {
   CheckIcon,
   ChevronDownIcon,
   Clipboard,
-  ClipboardCheck
+  ClipboardCheck,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "../utils/helpers";
@@ -53,7 +53,9 @@ export default function ColorCodeDisplay({
       {!text ? (
         <Listbox value={selectedFormat} onChange={setSelectedFormat}>
           <ListboxButton className="relative flex-1 h-full flex items-center px-5 bg-zinc-100 rounded-xl text-zinc-800 font-semibold">
-            {values?.[selectedFormat]}
+            <p className="text-left whitespace-nowrap">
+              {values?.[selectedFormat]}
+            </p>
             <ChevronDownIcon className="group pointer-events-none absolute top-4.5 right-3 size-4 text-slate-400" />
           </ListboxButton>
           <ListboxOptions
@@ -61,7 +63,7 @@ export default function ColorCodeDisplay({
             transition
             className={cn(
               "bg-white z-10 shadow-sm p-1 mt-1 rounded-xl border border-slate-500/20 focus:outline-none  transition duration-100 ease-in data-leave:data-closed:opacity-0",
-              noControls ? "w-[375px]" : "w-[300px]",
+              noControls ? "w-[428px]" : "w-[356px]",
             )}
           >
             {formats?.map((format) => (

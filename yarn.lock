@@ -957,6 +957,11 @@ color-convert@^2.0.1:
   dependencies:
     color-name "~1.1.4"
 
+color-name-list@^14.36.0:
+  version "14.36.0"
+  resolved "https://registry.yarnpkg.com/color-name-list/-/color-name-list-14.36.0.tgz#9b7ddc6946f8411152b75e066edbbe1d4550db2a"
+  integrity sha512-+FAv6XNntXKvyQpk0ARKMqcvo54j2zMKY4zwW3uMPKV5kh5C23FQFVhmybqfTKRXaD6o+DYy8d/XZH7HVQchmQ==
+
 color-name@~1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"

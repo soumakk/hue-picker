@@ -1,7 +1,7 @@
+import { ClipboardPaste, XCircle } from "lucide-react";
 import { useContext, useRef } from "react";
-import { ColorUtils, parseColorToHsv } from "../lib/ColorUtils";
 import { ColorContext } from "../lib/ColorContext";
-import { ClipboardPaste, Eraser } from "lucide-react";
+import { ColorUtils, parseColorToRgb } from "../lib/ColorUtils";
 
 const ColorInput = () => {
   const { setColor } = useContext(ColorContext);
@@ -9,11 +9,11 @@ const ColorInput = () => {
 
   function changeColor() {
     if (inputRef.current) {
-      const result = parseColorToHsv(inputRef.current.value);
+      const result = parseColorToRgb(inputRef.current.value);
 
       if (!result.error) {
         // result.color is guaranteed to exist here
-        setColor(ColorUtils.convert("hsv", result.color));
+        setColor(ColorUtils.convert("rgb", result.color));
       }
     }
   }
@@ -38,7 +38,7 @@ const ColorInput = () => {
         ref={inputRef}
         placeholder="Type or paste any color"
         type="text"
-        className="h-16 w-full bg-zinc-100 rounded-xl px-5 border border-zinc-200"
+        className="h-16 w-full bg-zinc-100 rounded-xl px-5 pr-24 border border-zinc-200"
         onChange={changeColor}
         // onKeyDown={(e) => {
         //   if (e.key === "Enter") {
@@ -52,9 +52,9 @@ const ColorInput = () => {
         className="absolute cursor-pointer text-zinc-600 right-4 top-1/2 -translate-y-1/2"
       />
 
-      <Eraser
+      <XCircle
         onClick={onClear}
-        className="absolute cursor-pointer text-zinc-500 right-14 top-1/2 -translate-y-1/2"
+        className="absolute cursor-pointer text-zinc-400 right-14 top-1/2 -translate-y-1/2"
       />
     </div>
   );

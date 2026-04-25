@@ -1,10 +1,10 @@
 import { Disclosure, DisclosurePanel } from "@headlessui/react";
 import { useContext } from "react";
-import ColorCodeDisplay from "../lib/ColorCodeDisplay";
-import { ColorContext } from "../lib/ColorContext";
-import { ColorUtils } from "../lib/ColorUtils";
-import { GLSL_MAX } from "../utils/const";
-import { formatGLSL } from "../utils/helpers";
+import { ColorContext } from "../../lib/ColorContext";
+import { ColorUtils } from "../../lib/ColorUtils";
+import { GLSL_MAX } from "../../utils/const";
+import { formatGLSL } from "../../utils/helpers";
+import ColorCodeDisplay from "../ColorCodeDisplay";
 import Controls from "./Controls";
 
 export default function GLSLControls() {

@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { ColorContext } from "../lib/ColorContext";
-import ColorCodeDisplay from "../lib/ColorCodeDisplay";
+import { ColorContext } from "../../lib/ColorContext";
+import ColorCodeDisplay from "../ColorCodeDisplay";
 
 export default function HexControls() {
   const { color } = useContext(ColorContext);

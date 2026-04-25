@@ -1,4 +1,5 @@
 import { clamp } from "../utils/helpers";
+import { colornames } from "color-name-list";
 
 export interface IColor {
   readonly hex: string;
@@ -6,6 +7,7 @@ export interface IColor {
   readonly hsv: IColorHsv;
   readonly glsl: IColorGlsl;
   readonly oklch: IColorOklch;
+  readonly hsl: IColorHsl;
 }
 
 interface IColorGlsl {
@@ -29,6 +31,13 @@ interface IColorHsv {
   readonly a: number;
 }
 
+interface IColorHsl {
+  readonly h: number;
+  readonly s: number;
+  readonly l: number;
+  readonly a: number;
+}
+
 export interface IColorOklch {
   readonly l: number;
   readonly c: number;
@@ -46,6 +55,7 @@ class ColorUtilsStatic {
     let hsv!: IColor["hsv"];
     let glsl!: IColor["glsl"];
     let oklch!: IColor["oklch"];
+    let hsl!: IColor["hsl"];
 
     if (model === "hex") {
       const value = color as IColor["hex"];
@@ -87,7 +97,7 @@ class ColorUtilsStatic {
       glsl = this.rgbToGlsl(rgb);
     }
 
-    return { hex, rgb, hsv, glsl, oklch };
+    return { hex, rgb, hsv, glsl, oklch, hsl };
   }
 
   public toHex(value: string): IColor["hex"] {
@@ -264,23 +274,86 @@ class ColorUtilsStatic {
       a,
     };
   }
+
+  public rgbToHsl({ r, g, b }: IColor["rgb"]) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h = 0,
+      s = 0,
+      l = (max + min) / 2;
+
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+      switch (max) {
+        case r:
+          h = (g - b) / d + (g < b ? 6 : 0);
+          break;
+        case g:
+          h = (b - r) / d + 2;
+          break;
+        case b:
+          h = (r - g) / d + 4;
+          break;
+      }
+
+      h /= 6;
+    }
+
+    return { h, s, l };
+  }
+
+  public hslToRgb({ h, s, l, a }: IColor["hsl"]): IColor["rgb"] {
+    let r: number, g: number, b: number;
+
+    if (s === 0) {
+      r = g = b = l;
+    } else {
+      const hueToRgb = (p: number, q: number, t: number) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+      };
+
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+
+      r = hueToRgb(p, q, h + 1 / 3);
+      g = hueToRgb(p, q, h);
+      b = hueToRgb(p, q, h - 1 / 3);
+    }
+
+    return {
+      r: Math.round(r * 255),
+      g: Math.round(g * 255),
+      b: Math.round(b * 255),
+      a: a,
+    };
+  }
 }
 
 export const ColorUtils = new ColorUtilsStatic();
 
-export function parseColorToHsv(
+export function parseColorToRgb(
   colorStr: string,
-): { color: IColorHsv; error: false } | { color: null; error: true } {
+): { color: IColorRgb; error: false } | { color: null; error: true } {
   let r = 0,
     g = 0,
     b = 0,
     a = 1;
-  let error = false;
   const str = colorStr.trim().toLowerCase();
 
   if (!str) return { color: null, error: true };
 
-  // 1. Parse HEX
+  // 1. HEX
   if (str.startsWith("#")) {
     let hex = str.slice(1);
     if (!/^([0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(hex)) {
@@ -289,110 +362,100 @@ export function parseColorToHsv(
     if (hex.length === 3 || hex.length === 4) {
       hex = hex
         .split("")
-        .map((char) => char + char)
+        .map((c) => c + c)
         .join("");
     }
-    r = parseInt(hex.slice(0, 2), 16) / 255;
-    g = parseInt(hex.slice(2, 4), 16) / 255;
-    b = parseInt(hex.slice(4, 6), 16) / 255;
-    if (hex.length === 8) {
-      a = parseInt(hex.slice(6, 8), 16) / 255;
-    }
+    r = parseInt(hex.slice(0, 2), 16);
+    g = parseInt(hex.slice(2, 4), 16);
+    b = parseInt(hex.slice(4, 6), 16);
+    if (hex.length === 8) a = parseInt(hex.slice(6, 8), 16) / 255;
   }
-  // 2. Parse RGB / RGBA
+
+  // 2. RGB / RGBA
   else if (str.startsWith("rgb")) {
     const matches = str.match(/[\d.]+/g);
-    if (matches && matches.length >= 3) {
-      r = parseFloat(matches[0]) / 255;
-      g = parseFloat(matches[1]) / 255;
-      b = parseFloat(matches[2]) / 255;
-      if (matches[3]) a = parseFloat(matches[3]);
-    } else {
-      error = true;
-    }
+    if (!matches || matches.length < 3) return { color: null, error: true };
+    r = parseFloat(matches[0]);
+    g = parseFloat(matches[1]);
+    b = parseFloat(matches[2]);
+    if (matches[3]) a = parseFloat(matches[3]);
   }
-  // 3. Parse GLSL / vec
+
+  // 3. GLSL / vec
   else if (str.startsWith("vec") || str.startsWith("glsl")) {
-    const cleanedStr = str.replace(/^(vec[34]|glsl)/i, "");
-    const matches = cleanedStr.match(/[\d.]+/g);
-    if (matches && matches.length >= 3) {
-      r = parseFloat(matches[0]);
-      g = parseFloat(matches[1]);
-      b = parseFloat(matches[2]);
-      if (matches[3]) a = parseFloat(matches[3]);
-    } else {
-      error = true;
-    }
+    const cleaned = str.replace(/^(vec[34]|glsl)/i, "");
+    const matches = cleaned.match(/[\d.]+/g);
+    if (!matches || matches.length < 3) return { color: null, error: true };
+    r = parseFloat(matches[0]) * 255;
+    g = parseFloat(matches[1]) * 255;
+    b = parseFloat(matches[2]) * 255;
+    if (matches[3]) a = parseFloat(matches[3]);
   }
-  // 4. Parse OKLCH
+
+  // 4. OKLCH
   else if (str.startsWith("oklch")) {
-    const cleanedStr = str.replace(/^oklch\(/i, "").replace(/\)$/, "");
-    const parts = cleanedStr.split(/[\s,/]+/).filter(Boolean);
+    const cleaned = str.replace(/^oklch\(/i, "").replace(/\)$/, "");
+    const parts = cleaned.split(/[\s,/]+/).filter(Boolean);
+    if (parts.length < 3) return { color: null, error: true };
 
-    if (parts.length >= 3) {
-      let okl = parseFloat(parts[0]);
-      if (parts[0].includes("%")) okl /= 100;
-
-      let okc = parseFloat(parts[1]);
-      if (parts[1].includes("%")) okc = (okc / 100) * 0.4;
-
-      let okh = parseFloat(parts[2]);
-
-      if (parts[3]) {
-        a = parseFloat(parts[3]);
-        if (parts[3].includes("%")) a /= 100;
-      }
-
-      const tempRgb = ColorUtils.oklch2rgb({ l: okl, c: okc, h: okh, a });
-      r = tempRgb.r / 255;
-      g = tempRgb.g / 255;
-      b = tempRgb.b / 255;
-    } else {
-      error = true;
+    let okl = parseFloat(parts[0]);
+    if (parts[0].includes("%")) okl /= 100;
+    let okc = parseFloat(parts[1]);
+    if (parts[1].includes("%")) okc = (okc / 100) * 0.4;
+    const okh = parseFloat(parts[2]);
+    if (parts[3]) {
+      a = parseFloat(parts[3]);
+      if (parts[3].includes("%")) a /= 100;
     }
-  } else {
-    return { color: null, error: true };
+
+    const tempRgb = ColorUtils.oklch2rgb({ l: okl, c: okc, h: okh, a });
+    r = tempRgb.r;
+    g = tempRgb.g;
+    b = tempRgb.b;
   }
 
-  if (error || Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) {
-    return { color: null, error: true };
+  // 5. Named color
+  else {
+    const match = colornames.find((c) => c.name.toLowerCase() === str);
+    if (!match?.hex) return { color: null, error: true };
+
+    let hex = match.hex.replace("#", "");
+    if (hex.length === 3 || hex.length === 4) {
+      hex = hex
+        .split("")
+        .map((c) => c + c)
+        .join("");
+    }
+    r = parseInt(hex.slice(0, 2), 16);
+    g = parseInt(hex.slice(2, 4), 16);
+    b = parseInt(hex.slice(4, 6), 16);
+    if (hex.length === 8) a = parseInt(hex.slice(6, 8), 16) / 255;
   }
 
-  r = Math.max(0, Math.min(1, r));
-  g = Math.max(0, Math.min(1, g));
-  b = Math.max(0, Math.min(1, b));
-  a = Math.max(0, Math.min(1, a));
-
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  const d = max - min;
-
-  let h = 0;
-  let s = max === 0 ? 0 : d / max;
-  let v = max;
-
-  if (max !== min) {
-    switch (max) {
-      case r:
-        h = (g - b) / d + (g < b ? 6 : 0);
-        break;
-      case g:
-        h = (b - r) / d + 2;
-        break;
-      case b:
-        h = (r - g) / d + 4;
-        break;
-    }
-    h /= 6;
+  if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) {
+    return { color: null, error: true };
   }
 
   return {
     color: {
-      h: Math.round(h * 360),
-      s: s * 100,
-      v: v * 100,
-      a: parseFloat(a.toFixed(3)),
+      r: Math.round(Math.max(0, Math.min(255, r))),
+      g: Math.round(Math.max(0, Math.min(255, g))),
+      b: Math.round(Math.max(0, Math.min(255, b))),
+      a: parseFloat(Math.max(0, Math.min(1, a)).toFixed(3)),
     },
     error: false,
   };
+}
+
+export function generateVariants(base: IColor["rgb"]) {
+  const hsl = ColorUtils.rgbToHsl(base);
+
+  const adjust = (amount: number) =>
+    ColorUtils.hslToRgb({
+      ...hsl,
+      l: Math.min(1, Math.max(0, hsl.l + amount)),
+      a: base.a,
+    });
+
+  return [adjust(0.2), adjust(0.1), base, adjust(-0.1), adjust(-0.2)];
 }

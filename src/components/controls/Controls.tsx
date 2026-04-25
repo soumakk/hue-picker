@@ -1,5 +1,5 @@
-import { Slider } from "../ui/slider";
-import { MIN } from "../utils/const";
+import { Slider } from "../../ui/slider";
+import { MIN } from "../../utils/const";
 
 export default function Controls({
   max,
