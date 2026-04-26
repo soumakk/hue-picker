@@ -8,15 +8,12 @@ export default function ColorPreview() {
   const variants = generateVariants(color.rgb);
 
   return (
-    <div className="flex items-center w-full gap-2">
+    <div className="flex items-center w-full gap-0">
       {variants?.map((v, idx) => (
         <button
           key={idx}
           className={cn(
-            "h-20 flex-1 rounded-2xl hover:flex-[2] transition-[flex] duration-200 outline-1 outline-offset-2 cursor-pointer ring-1 ring-black/5",
-            {
-              "flex-[1.5] rounded-full cursor-default": idx === 2,
-            },
+            "h-12 flex-1  hover:flex-[2] transition-[flex] duration-200 outline-1 outline-offset-2 cursor-pointer ring-1 ring-black/5",
           )}
           onClick={() => setColor(ColorUtils.convert("rgb", v))}
           style={{ backgroundColor: ColorUtils.rgb2hex(v) }}

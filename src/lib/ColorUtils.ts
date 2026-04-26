@@ -457,5 +457,5 @@ export function generateVariants(base: IColor["rgb"]) {
       a: base.a,
     });
 
-  return [adjust(0.2), adjust(0.1), base, adjust(-0.1), adjust(-0.2)];
+  return [adjust(0.3), adjust(0.15), base, adjust(-0.15), adjust(-0.3)];
 }
