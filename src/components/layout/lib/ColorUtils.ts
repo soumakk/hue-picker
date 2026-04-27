@@ -1,4 +1,4 @@
-import { clamp } from "../utils/helpers";
+import { clamp } from "../../../utils/helpers";
 import { colornames } from "color-name-list";
 
 export interface IColor {
@@ -445,70 +445,4 @@ export function parseColorToRgb(
     },
     error: false,
   };
-}
-
-export interface IColorVariant {
-  color: IColor["rgb"];
-  luminance: number;
-  pct: number;
-}
-
-export function generateVariants(base: IColor["rgb"]) {
-  const hsl = ColorUtils.rgbToHsl(base);
-
-  const steps = 11;
-
-  const tints: IColorVariant[] = [];
-  const shades: IColorVariant[] = [];
-
-  for (let i = 0; i < steps; i++) {
-    const t = i / (steps - 1); // 0 → 1
-
-    // Tints (towards white)
-    const c1 = ColorUtils.hslToRgb({
-      ...hsl,
-      l: hsl.l + (1 - hsl.l) * t,
-      a: base.a,
-    });
-    tints.push({
-      color: c1,
-      luminance: getLuminance(c1),
-      pct: (i * 100) / 10,
-    });
-
-    // Shades (towards black)
-    const c2 = ColorUtils.hslToRgb({
-      ...hsl,
-      l: hsl.l * (1 - t),
-      a: base.a,
-    });
-    shades.push({
-      color: c2,
-      luminance: getLuminance(c2),
-      pct: (i * 100) / 10,
-    });
-  }
-
-  return {
-    tints,
-    shades,
-  };
-}
-
-export function getLuminance(rgb: { r: number; g: number; b: number }): number {
-  // 1. Normalize to 0–1
-  const r = rgb.r / 255;
-  const g = rgb.g / 255;
-  const b = rgb.b / 255;
-
-  // 2. Apply gamma correction
-  const transform = (c: number) =>
-    c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-
-  const rLin = transform(r);
-  const gLin = transform(g);
-  const bLin = transform(b);
-
-  // 3. Calculate luminance
-  return 0.2126 * rLin + 0.7152 * gLin + 0.0722 * bLin;
 }

@@ -9,6 +9,7 @@ export default function Controls({
   title,
   handleInputChange,
   handleSliderChange,
+  trackColor,
 }: {
   min?: number;
   max: number;
@@ -17,29 +18,34 @@ export default function Controls({
   title: string;
   handleInputChange: (value: string) => void;
   handleSliderChange: (value: number) => void;
+  trackColor?: string;
 }) {
   return (
-    <div className="space-y-3">
-      <div className="flex justify-between items-center">
-        <p className="font-medium">{title}</p>
-        <input
-          type="number"
+    <div className="flex justify-between gap-5 items-center">
+      <p className="font-medium w-20 text-sm text-neutral-600">{title}</p>
+
+      <div className="flex-1">
+        <Slider
+          value={[Number(value)]}
           min={MIN}
           max={max}
           step={step}
-          value={value}
-          onChange={(e) => handleInputChange(e.target.value)}
-          onClick={(e: any) => e.target.select()}
-          className="w-16 ring-1 ring-zinc-200 bg-zinc-100 rounded-md px-2 py-1 select-all"
+          onValueChange={(value) => {
+            handleSliderChange(value as number);
+          }}
+          trackColor={trackColor}
         />
       </div>
 
-      <Slider
-        value={[Number(value)]}
+      <input
+        type="number"
         min={MIN}
         max={max}
         step={step}
-        onValueChange={(values: number[]) => handleSliderChange(values[0])}
+        value={value}
+        onChange={(e) => handleInputChange(e.target.value)}
+        onClick={(e: any) => e.target.select()}
+        className="w-16 ring-1 ring-neutral-200 rounded-md px-2 py-1 select-all"
       />
     </div>
   );

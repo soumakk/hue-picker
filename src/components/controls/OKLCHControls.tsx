@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { ColorContext } from "../../lib/ColorContext";
+import { ColorContext } from "../layout/lib/ColorContext";
 import { formatOKLCH } from "../../utils/helpers";
-import ColorCodeDisplay from "../ColorCodeDisplay";
+import ColorCodeDisplay from "../layout/ColorCodeDisplay";
 
 export default function OKLCHControls() {
   const { color } = useContext(ColorContext);

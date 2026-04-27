@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { IColor } from "../lib/ColorUtils";
+import { IColor } from "../components/layout/lib/ColorUtils";
 
 export function rgbToCmyk(color: IColor) {
   const { rgb } = color;

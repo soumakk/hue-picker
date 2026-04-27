@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { ColorPicker, Hue, Alpha } from "react-color-palette";
 import "react-color-palette/css";
-import { ColorContext } from "../../lib/ColorContext";
-import { ColorUtils } from "../../lib/ColorUtils";
+import { ColorContext } from "./lib/ColorContext";
+import { ColorUtils } from "./lib/ColorUtils";
 import { HUE_MAX, MIN, PCT_MAX } from "../../utils/const";
 
 export default function ColorPickerCard() {
@@ -33,18 +33,20 @@ export default function ColorPickerCard() {
   }
 
   return (
-    <div className=" border shadow-sm rounded-lg">
+    <div className=" border shadow-sm rounded-2xl">
       <div className="px-5 py-5 flex flex-col gap-3 border-b">
         <h3 className="text-base font-medium">Color Picker</h3>
-        <ColorPicker
-          height={400}
-          color={color}
-          onChange={(color) => {
-            setColor(ColorUtils.convert("hsv", color.hsv));
-          }}
-          hideInput
-          hideAlpha
-        />
+        <div id="main-picker">
+          <ColorPicker
+            height={400}
+            color={color}
+            onChange={(color) => {
+              setColor(ColorUtils.convert("hsv", color.hsv));
+            }}
+            hideInput
+            hideAlpha
+          />
+        </div>
 
         <div className="flex items-center gap-4">
           <p className="text-sm w-12">Hue</p>
@@ -62,7 +64,7 @@ export default function ColorPickerCard() {
             value={Math.round(color.hsv.h).toFixed(0)}
             onChange={(e) => handleInputChange("h", e.target.value)}
             onClick={(e: any) => e.target.select()}
-            className="w-16 ml-2 ring-1 ring-zinc-200 bg-zinc-100 rounded-md px-2 py-1 select-all"
+            className="w-16 ml-2 ring-1 ring-neutral-200 rounded-md px-2 py-1 select-all"
           />
         </div>
 
@@ -82,7 +84,7 @@ export default function ColorPickerCard() {
             value={`${color.hsv.a === 0 || color.hsv.a === 1 ? color.hsv.a : color.hsv.a.toFixed(2)}`}
             onChange={(e) => handleInputChange("a", e.target.value)}
             onClick={(e: any) => e.target.select()}
-            className="w-16 ml-2 ring-1 ring-zinc-200 bg-zinc-100 rounded-md px-2 py-1 select-all"
+            className="w-16 ml-2 ring-1 ring-neutral-200 rounded-md px-2 py-1 select-all"
           />
         </div>
       </div>

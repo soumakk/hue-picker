@@ -1,10 +1,7 @@
-import { Disclosure, DisclosurePanel } from "@headlessui/react";
 import { useContext } from "react";
-import { ColorContext } from "../../lib/ColorContext";
-import { ColorUtils } from "../../lib/ColorUtils";
+import { ColorContext } from "../layout/lib/ColorContext";
+import { ColorUtils } from "../layout/lib/ColorUtils";
 import { RGB_MAX } from "../../utils/const";
-import { formatRGB } from "../../utils/helpers";
-import ColorCodeDisplay from "../ColorCodeDisplay";
 import Controls from "./Controls";
 
 export default function RGBControls() {
@@ -36,49 +33,36 @@ export default function RGBControls() {
   }
 
   return (
-    <div className="flex flex-col gap-5 my-5">
-      <Disclosure>
-        <ColorCodeDisplay
-          type="RGB"
-          values={{
-            code: formatRGB(color.rgb),
-            value: formatRGB(color.rgb, {
-              prefix: false,
-            }),
-          }}
-        />
+    <div className="flex flex-col gap-6">
+      <Controls
+        max={RGB_MAX}
+        step={1}
+        value={parseInt(`${color.rgb.r}`).toFixed(0)}
+        title="Red"
+        handleInputChange={(value) => handleInputChange("r", value)}
+        handleSliderChange={(value) => handleSliderChange("r", value)}
+        trackColor="linear-gradient(to right, rgb(0,0,0), rgb(255,0,0))"
+      />
+      <Controls
+        max={RGB_MAX}
+        step={1}
+        value={parseInt(`${color.rgb.g}`).toFixed(0)}
+        title="Green"
+        handleInputChange={(value) => handleInputChange("g", value)}
+        handleSliderChange={(value) => handleSliderChange("g", value)}
+        trackColor="linear-gradient(to right, rgb(0,0,0), rgb(0,255,0))"
+      />
+      <Controls
+        max={RGB_MAX}
+        step={1}
+        value={parseInt(`${color.rgb.b}`).toFixed(0)}
+        title="Blue"
+        handleInputChange={(value) => handleInputChange("b", value)}
+        handleSliderChange={(value) => handleSliderChange("b", value)}
+        trackColor="linear-gradient(to right, rgb(0,0,0), rgb(0,0,255))"
+      />
 
-        <DisclosurePanel
-          transition
-          className="origin-top transition duration-200 ease-out data-closed:-translate-y-6 data-closed:opacity-0"
-        >
-          <div className="ring-1 ring-slate-200 p-5 rounded-xl flex flex-col gap-6">
-            <Controls
-              max={RGB_MAX}
-              step={1}
-              value={parseInt(`${color.rgb.r}`).toFixed(0)}
-              title="Red"
-              handleInputChange={(value) => handleInputChange("r", value)}
-              handleSliderChange={(value) => handleSliderChange("r", value)}
-            />
-            <Controls
-              max={RGB_MAX}
-              step={1}
-              value={parseInt(`${color.rgb.g}`).toFixed(0)}
-              title="Green"
-              handleInputChange={(value) => handleInputChange("g", value)}
-              handleSliderChange={(value) => handleSliderChange("g", value)}
-            />
-            <Controls
-              max={RGB_MAX}
-              step={1}
-              value={parseInt(`${color.rgb.b}`).toFixed(0)}
-              title="Blue"
-              handleInputChange={(value) => handleInputChange("b", value)}
-              handleSliderChange={(value) => handleSliderChange("b", value)}
-            />
-
-            {/*<Controls
+      {/*<Controls
               max={1}
               step={0.001}
               value={`${color.rgb.a === 0 || color.rgb.a === 1 ? color.rgb.a : color.rgb.a.toFixed(2)}`}
@@ -86,9 +70,6 @@ export default function RGBControls() {
               handleInputChange={(value) => handleInputChange("a", value)}
               handleSliderChange={(value) => handleSliderChange("a", value)}
             />*/}
-          </div>
-        </DisclosurePanel>
-      </Disclosure>
     </div>
   );
 }

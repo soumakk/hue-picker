@@ -1,19 +1,50 @@
-import React, { useContext } from "react";
-import { ColorContext } from "../lib/ColorContext";
-import { ColorUtils, generateVariants, IColorVariant } from "../lib/ColorUtils";
-import { cn } from "../utils/helpers";
+import { useContext } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { cn } from "../utils/helpers";
 import useCopyToClipboard from "../utils/useCopyToClipboard";
-import { toast } from "sonner";
+import { ColorContext } from "./layout/lib/ColorContext";
+import { ColorUtils } from "./layout/lib/ColorUtils";
+import { generateVariants, IColorVariant } from "./layout/lib/Utils";
+import { HoverInfoPopover } from "./utils/HoverInfoPopover";
 
 export default function ColorPreview() {
   const { color } = useContext(ColorContext);
   const variants = generateVariants(color.rgb);
 
   return (
-    <div className="border shadow-sm rounded-lg p-5 flex flex-col gap-3">
-      <ColorPallete title="Shades" colors={variants.shades} />
+    <div className="relative border shadow-sm rounded-2xl p-5 flex flex-col gap-3">
+      <HoverInfoPopover
+        bodyContent={
+          <div className="flex flex-col gap-3 p-1">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="flex h-3 w-3 rounded-full bg-blue-300"></span>
+                <h4 className="font-medium text-neutral-900">Tints</h4>
+              </div>
+              <p className="text-sm text-neutral-600 leading-snug">
+                Your base color mixed with <strong>white</strong>. This makes it
+                lighter, creating softer or pastel variations.
+              </p>
+            </div>
+
+            <div className="h-px w-full bg-neutral-200"></div>
+
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="flex h-3 w-3 rounded-full bg-blue-900"></span>
+                <h4 className="font-medium text-neutral-900">Shades</h4>
+              </div>
+              <p className="text-sm text-neutral-600 leading-snug">
+                Your base color mixed with <strong>black</strong>. This makes it
+                darker, creating deeper or richer variations.
+              </p>
+            </div>
+          </div>
+        }
+      />
+
       <ColorPallete title="Tints" colors={variants.tints} />
+      <ColorPallete title="Shades" colors={variants.shades} />
     </div>
   );
 }
@@ -26,10 +57,7 @@ function ColorPallete({
   colors: IColorVariant[];
 }) {
   const { copyToClipboard } = useCopyToClipboard();
-  function onCopy(text: string) {
-    copyToClipboard(text);
-    toast.success(`${text} is copied to clipboard`);
-  }
+
   return (
     <>
       <h3 className="text-base font-medium">{title}</h3>
@@ -43,7 +71,9 @@ function ColorPallete({
                   className={cn(
                     "h-12 flex-1 hover:flex-[2] transition-[flex] duration-200 outline-1 outline-offset-2 cursor-pointer",
                   )}
-                  onClick={() => onCopy(ColorUtils.rgb2hex(v.color))}
+                  onClick={() =>
+                    copyToClipboard(ColorUtils.rgb2hex(v.color)?.toUpperCase())
+                  }
                   style={{ backgroundColor: ColorUtils.rgb2hex(v.color) }}
                 >
                   <span
@@ -58,7 +88,7 @@ function ColorPallete({
               }
             ></TooltipTrigger>
             <TooltipContent>
-              <span>{ColorUtils.rgb2hex(v.color)}</span>
+              <span className="uppercase">{ColorUtils.rgb2hex(v.color)}</span>
             </TooltipContent>
           </Tooltip>
         ))}

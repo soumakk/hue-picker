@@ -1,43 +1,29 @@
-import { Toaster } from "sonner";
-import ColorInput from "./components/ColorInputBox";
-import ColorName from "./components/ColorName";
 import ColorPreview from "./components/ColorPreview";
-import GLSLControls from "./components/controls/GLSLControls";
-import HexControls from "./components/controls/HexControls";
-import HSVControls from "./components/controls/HSVControls";
-import OKLCHControls from "./components/controls/OKLCHControls";
-import RGBControls from "./components/controls/RGBControls";
+import ColorControls from "./components/layout/ColorControls";
 import ColorPickerCard from "./components/layout/ColorPickerCard";
 import { TooltipProvider } from "./ui/tooltip";
+import Header from "./components/layout/Header";
+import ContrastRadio from "./components/layout/ContrastRadio";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <TooltipProvider>
       <div className="max-w-[1440px] mx-auto p-5">
-        <div className="flex justify-center">
-          <h1 className="text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-green-500 inline-block mx-auto text-4xl my-4 font-medium">
-            Hue Picker
-          </h1>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative">
-          <div>
+        <Header />
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 relative">
+          <div className="flex flex-col gap-4 col-span-2">
             <ColorPickerCard />
             <ColorPreview />
           </div>
-
-          <div className="px-4 space-y-5 py-6">
-            <ColorInput />
-
-            <HexControls />
-            <ColorName />
-            <RGBControls />
-            <HSVControls />
-            <GLSLControls />
-            <OKLCHControls />
+          <div className="flex flex-col gap-4 col-span-2">
+            <ColorControls />
+            <ContrastRadio />
           </div>
         </div>
       </div>
-      <Toaster />
+      <Toaster position="top-right" />
     </TooltipProvider>
   );
 }

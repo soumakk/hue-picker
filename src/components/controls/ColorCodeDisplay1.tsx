@@ -13,8 +13,8 @@ import {
   ClipboardCheck,
 } from "lucide-react";
 import { useState } from "react";
-import { cn } from "../utils/helpers";
-import useCopyToClipboard from "../utils/useCopyToClipboard";
+import { cn } from "../../utils/helpers";
+import useCopyToClipboard from "../../utils/useCopyToClipboard";
 
 export default function ColorCodeDisplay({
   noControls,
