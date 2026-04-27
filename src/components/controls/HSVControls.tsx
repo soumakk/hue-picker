@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { ColorContext } from "../layout/lib/ColorContext";
-import { ColorUtils } from "../layout/lib/ColorUtils";
 import { HUE_MAX, PCT_MAX } from "../../utils/const";
 import Controls from "./Controls";
+import { ColorContext } from "../lib/ColorContext";
+import { ColorUtils } from "../lib/ColorUtils";
 
 export default function HSVControls() {
   const { color, setColor } = useContext(ColorContext);

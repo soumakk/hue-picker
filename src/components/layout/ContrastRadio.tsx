@@ -5,9 +5,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 import { cn } from "../../utils/helpers";
 import useCopyToClipboard from "../../utils/useCopyToClipboard";
 import { HoverInfoPopover } from "../utils/HoverInfoPopover";
-import { ColorContext } from "./lib/ColorContext";
-import { ColorUtils, IColor } from "./lib/ColorUtils";
-import { getContrastLevel, getContrastRatio } from "./lib/Utils";
+import { ColorContext } from "../lib/ColorContext";
+import { ColorUtils, IColor } from "../lib/ColorUtils";
+import { getContrastRatio, getContrastLevel } from "../lib/Utils";
 
 export default function ContrastRadio() {
   const { color, setColor } = useContext(ColorContext);

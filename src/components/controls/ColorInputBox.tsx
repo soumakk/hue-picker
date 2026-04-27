@@ -1,7 +1,7 @@
 import { ClipboardPaste, XCircle } from "lucide-react";
 import { useContext, useRef } from "react";
-import { ColorContext } from "./layout/lib/ColorContext";
-import { ColorUtils, parseColorToRgb } from "./layout/lib/ColorUtils";
+import { ColorContext } from "../lib/ColorContext";
+import { ColorUtils, parseColorToRgb } from "../lib/ColorUtils";
 
 const ColorInput = () => {
   const { setColor } = useContext(ColorContext);

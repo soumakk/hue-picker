@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
-import HexControls from "../controls/HexControls";
-import RGBControls from "../controls/RGBControls";
-import ColorCodeDisplay from "./ColorCodeDisplay";
+import { useContext } from "react";
 import {
   formatGLSL,
   formatHSV,
   formatOKLCH,
   formatRGB,
 } from "../../utils/helpers";
-import { ColorContext } from "./lib/ColorContext";
+import ColorCodeDisplay from "./ColorCodeDisplay";
+import { ColorContext } from "../lib/ColorContext";
 
 export default function ColorValues() {
   const { color } = useContext(ColorContext);

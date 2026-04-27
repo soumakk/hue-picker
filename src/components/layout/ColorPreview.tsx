@@ -1,11 +1,12 @@
 import { useContext } from "react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { cn } from "../utils/helpers";
-import useCopyToClipboard from "../utils/useCopyToClipboard";
-import { ColorContext } from "./layout/lib/ColorContext";
-import { ColorUtils } from "./layout/lib/ColorUtils";
-import { generateVariants, IColorVariant } from "./layout/lib/Utils";
-import { HoverInfoPopover } from "./utils/HoverInfoPopover";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
+import { cn } from "../../utils/helpers";
+import useCopyToClipboard from "../../utils/useCopyToClipboard";
+
+import { HoverInfoPopover } from "../utils/HoverInfoPopover";
+import { ColorContext } from "../lib/ColorContext";
+import { ColorUtils } from "../lib/ColorUtils";
+import { generateVariants, IColorVariant } from "../lib/Utils";
 
 export default function ColorPreview() {
   const { color } = useContext(ColorContext);

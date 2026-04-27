@@ -1,4 +1,4 @@
-import ColorPreview from "./components/ColorPreview";
+import ColorPreview from "./components/layout/ColorPreview";
 import ColorControls from "./components/layout/ColorControls";
 import ColorPickerCard from "./components/layout/ColorPickerCard";
 import { TooltipProvider } from "./ui/tooltip";

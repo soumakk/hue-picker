@@ -1,5 +1,5 @@
-import { clamp } from "../../../utils/helpers";
 import { colornames } from "color-name-list";
+import { clamp } from "../../utils/helpers";
 
 export interface IColor {
   readonly hex: string;

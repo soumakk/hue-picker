@@ -1,4 +1,4 @@
-import ColorInput from "../ColorInputBox";
+import ColorInput from "../controls/ColorInputBox";
 import ColorAdjustment from "./ColorAdjustment";
 import ColorValues from "./ColorValues";
 

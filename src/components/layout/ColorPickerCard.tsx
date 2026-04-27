@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { ColorPicker, Hue, Alpha } from "react-color-palette";
 import "react-color-palette/css";
-import { ColorContext } from "./lib/ColorContext";
-import { ColorUtils } from "./lib/ColorUtils";
 import { HUE_MAX, MIN, PCT_MAX } from "../../utils/const";
+import { ColorContext } from "../lib/ColorContext";
+import { ColorUtils } from "../lib/ColorUtils";
 
 export default function ColorPickerCard() {
   const { color, setColor } = useContext(ColorContext);

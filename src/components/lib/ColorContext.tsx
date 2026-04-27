@@ -1,7 +1,6 @@
 import { ReactNode, createContext, useState } from "react";
-import { initialColor } from "../../../utils/const";
+import { initialColor } from "../../utils/const";
 import { ColorUtils, IColor } from "./ColorUtils";
-import { useColor } from "react-color-palette";
 
 interface IColorContext {
   color: IColor;

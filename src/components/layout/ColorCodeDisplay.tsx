@@ -1,5 +1,4 @@
 import { Clipboard, ClipboardCheck } from "lucide-react";
-import { toast } from "sonner";
 import { cn } from "../../utils/helpers";
 import useCopyToClipboard from "../../utils/useCopyToClipboard";
 
