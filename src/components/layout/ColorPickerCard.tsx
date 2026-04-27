@@ -74,11 +74,10 @@ export default function ColorPickerCard() {
               setColor(ColorUtils.convert("hsv", color.hsv));
             }}
           />
-
           <NumberInput
             min={MIN}
             max={1}
-            step={0.001}
+            step={0.01}
             value={`${color.hsv.a === 0 || color.hsv.a === 1 ? color.hsv.a : color.hsv.a.toFixed(2)}`}
             onChange={(e: string) => handleInputChange("a", e)}
           />

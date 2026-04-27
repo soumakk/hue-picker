@@ -20,6 +20,14 @@ export function NumberInput({
       min={min}
       max={max}
       step={step}
+      format={
+        step < 1
+          ? {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }
+          : {}
+      }
     >
       <NumberField.Group className="flex w-20 ring-1 ring-neutral-200 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-neutral-900 bg-white">
         <NumberField.Input
