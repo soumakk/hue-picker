@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <div className=" mb-5">
+    <div className="flex items-center justify-between mb-5">
       <div className="flex items-center gap-3">
         <HueLogo />
         <div>
@@ -10,6 +10,14 @@ export default function Header() {
           </p>
         </div>
       </div>
+
+      <a href="https://github.com/soumakk/hue-picker" target="_blank">
+        <img
+          src="/github.svg"
+          alt="GitHub"
+          className="h-7 w-7 hover:scale-110 transition-transform duration-150"
+        />
+      </a>
     </div>
   );
 }
