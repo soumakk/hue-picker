@@ -33,7 +33,7 @@ const ColorInput = () => {
   }
 
   return (
-    <div className="p-5 flex flex-col gap-1">
+    <div className="p-5 flex flex-col gap-2">
       <h3 className="font-medium mb-2">Color Input</h3>
 
       <div className="flex items-center gap-3">
@@ -57,11 +57,11 @@ const ColorInput = () => {
           />
         </div>
 
-        <button className="border border-neutral-200 h-14 w-14 rounded-xl grid place-content-center bg-neutral-50 active:scale-110 transition-transform">
-          <ClipboardPaste
-            onClick={onPaste}
-            className="cursor-pointer text-neutral-500 h-5 w-5"
-          />
+        <button
+          className="border border-neutral-200 h-14 w-14 rounded-xl grid place-content-center bg-neutral-50 active:scale-110 transition-transform"
+          onClick={onPaste}
+        >
+          <ClipboardPaste className="cursor-pointer text-neutral-500 h-5 w-5" />
         </button>
       </div>
       <p className="text-xs text-neutral-400">

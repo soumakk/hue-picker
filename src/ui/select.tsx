@@ -40,7 +40,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "flex w-fit items-center justify-between gap-1.5 rounded-lg border border-zinc-300 bg-white py-2 pr-2 pl-2.5 text-sm text-zinc-900 whitespace-nowrap transition-colors outline-none select-none",
+        "flex w-fit items-center justify-between gap-1.5 rounded-lg border border-zinc-200 bg-neutral-100 py-2 pr-2 pl-2.5 text-sm text-zinc-900 whitespace-nowrap transition-colors outline-none select-none",
         "focus-visible:border-blue-500 focus-visible:ring-2 focus-visible:ring-blue-500/30",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "data-placeholder:text-zinc-400",
@@ -52,7 +52,7 @@ function SelectTrigger({
     >
       {children}
       <SelectPrimitive.Icon
-        render={<ChevronDownIcon className="size-4 text-zinc-500" />}
+        render={<ChevronDownIcon className="h-4 w-4 text-zinc-500" />}
       />
     </SelectPrimitive.Trigger>
   );
@@ -140,7 +140,7 @@ function SelectItem({
       <SelectPrimitive.ItemIndicator
         render={
           <span className="absolute right-2 flex size-4 items-center justify-center">
-            <CheckIcon />
+            <CheckIcon className="h-4 w-4" />
           </span>
         }
       />

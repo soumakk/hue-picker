@@ -169,7 +169,7 @@ function ContrastPreview({
         {/* Ratio */}
         <div className="flex flex-col items-center">
           <span className="text-2xl font-semibold">
-            {contrast.ratio.toFixed(2)} : 1
+            {contrast.ratio.toFixed(2)}
           </span>
           <span className="text-xs opacity-70">Contrast Ratio</span>
         </div>
@@ -179,9 +179,9 @@ function ContrastPreview({
           <span
             className={cn(
               "text-sm font-medium px-3 py-1 rounded-full",
-              contrast.level === "AAA" && " text-white bg-emerald-600",
-              contrast.level === "AA" && " text-white bg-amber-600",
-              contrast.level === "Fail" && " text-white bg-rose-600",
+              contrast.level === "AAA" && " text-white bg-emerald-500",
+              contrast.level === "AA" && " text-white bg-amber-500",
+              contrast.level === "Fail" && " text-white bg-red-500",
             )}
           >
             {contrast.level}
