@@ -1,5 +1,6 @@
 import { Slider } from "../../ui/slider";
 import { MIN } from "../../utils/const";
+import { NumberInput } from "../utils/NumberInput";
 
 export default function Controls({
   max,
@@ -37,15 +38,12 @@ export default function Controls({
         />
       </div>
 
-      <input
-        type="number"
+      <NumberInput
         min={MIN}
         max={max}
         step={step}
         value={value}
-        onChange={(e) => handleInputChange(e.target.value)}
-        onClick={(e: any) => e.target.select()}
-        className="w-16 ring-1 ring-neutral-200 rounded-md px-2 py-1 select-all"
+        onChange={(value) => handleInputChange(value)}
       />
     </div>
   );

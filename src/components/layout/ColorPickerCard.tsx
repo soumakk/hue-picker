@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
-import { ColorPicker, Hue, Alpha } from "react-color-palette";
+import { useContext } from "react";
+import { Alpha, ColorPicker, Hue } from "react-color-palette";
 import "react-color-palette/css";
 import { HUE_MAX, MIN, PCT_MAX } from "../../utils/const";
 import { ColorContext } from "../lib/ColorContext";
 import { ColorUtils } from "../lib/ColorUtils";
+import { NumberInput } from "../utils/NumberInput";
 
 export default function ColorPickerCard() {
   const { color, setColor } = useContext(ColorContext);
@@ -56,15 +57,12 @@ export default function ColorPickerCard() {
               setColor(ColorUtils.convert("hsv", color.hsv));
             }}
           />
-          <input
-            type="number"
+          <NumberInput
             min={MIN}
             max={HUE_MAX}
             step={1}
             value={Math.round(color.hsv.h).toFixed(0)}
-            onChange={(e) => handleInputChange("h", e.target.value)}
-            onClick={(e: any) => e.target.select()}
-            className="w-16 ml-2 ring-1 ring-neutral-200 rounded-md px-2 py-1 select-all"
+            onChange={(e: string) => handleInputChange("h", e)}
           />
         </div>
 
@@ -76,15 +74,13 @@ export default function ColorPickerCard() {
               setColor(ColorUtils.convert("hsv", color.hsv));
             }}
           />
-          <input
-            type="number"
+
+          <NumberInput
             min={MIN}
             max={1}
             step={0.001}
             value={`${color.hsv.a === 0 || color.hsv.a === 1 ? color.hsv.a : color.hsv.a.toFixed(2)}`}
-            onChange={(e) => handleInputChange("a", e.target.value)}
-            onClick={(e: any) => e.target.select()}
-            className="w-16 ml-2 ring-1 ring-neutral-200 rounded-md px-2 py-1 select-all"
+            onChange={(e: string) => handleInputChange("a", e)}
           />
         </div>
       </div>
