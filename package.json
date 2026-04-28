@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "license":"MIT",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -18,7 +18,8 @@
     "react": "^18.2.0",
     "react-color-palette": "^7.1.0",
     "react-dom": "^18.2.0",
-    "react-hot-toast": "^2.6.0" 
+    "react-hot-toast": "^2.6.0",
+    "react-hotkeys-hook": "^5.2.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",

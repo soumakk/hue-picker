@@ -63,23 +63,27 @@ export default function ColorValues() {
       <ColorCodeDisplay
         type="HEX"
         text={formatHEX(color.hex.toUpperCase(), { format: active })}
-        noControls
+        shortcut="alt + h"
       />
       <ColorCodeDisplay
         type="RGB"
         text={formatRGB(color.rgb, { format: active })}
+        shortcut="alt + r"
       />
       <ColorCodeDisplay
         type="HSV"
         text={formatHSV(color.hsv, { format: active })}
+        shortcut="alt + s"
       />
       <ColorCodeDisplay
         type="GLSL"
         text={formatGLSL(color.glsl, { format: active })}
+        shortcut="alt + g"
       />
       <ColorCodeDisplay
         type="OKLCH"
         text={formatOKLCH(color.oklch, { format: active })}
+        shortcut="alt + l"
       />
     </div>
   );

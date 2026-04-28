@@ -1,17 +1,28 @@
 import { Clipboard, ClipboardCheck } from "lucide-react";
+import { useHotkeys } from "react-hotkeys-hook";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 import { cn } from "../../utils/helpers";
 import useCopyToClipboard from "../../utils/useCopyToClipboard";
 
 export default function ColorCodeDisplay({
   text,
   type,
+  shortcut,
 }: {
-  noControls?: boolean;
-  values?: Record<string, string>;
   text?: string;
   type: string;
+  shortcut: string;
 }) {
   const { copyToClipboard, isCopied } = useCopyToClipboard();
+
+  useHotkeys(shortcut, (e) => {
+    e.preventDefault();
+    if (!isCopied) {
+      if (text) {
+        copyToClipboard(text);
+      }
+    }
+  });
 
   function handleCopy() {
     if (!isCopied) {
@@ -26,8 +37,12 @@ export default function ColorCodeDisplay({
       <div className="w-12 text-sm text-neutral-600 font-medium">{type}</div>
 
       {text ? (
-        <div className="flex items-center px-5 h-full border border-neutral-200 rounded-xl font-medium text-zinc-800 select-all flex-1">
+        <div className="flex items-center justify-between px-4 h-full border border-neutral-200 rounded-xl font-medium text-zinc-800 select-all flex-1">
           {text}
+
+          <div className="bg-neutral-100 rounded-md border border-neutral-200 py-1 px-2 text-xs font-normal">
+            {shortcut}
+          </div>
         </div>
       ) : null}
 

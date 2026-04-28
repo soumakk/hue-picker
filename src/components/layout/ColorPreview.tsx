@@ -70,7 +70,7 @@ function ColorPallete({
               render={
                 <button
                   className={cn(
-                    "h-12 flex-1 hover:flex-[2] transition-[flex] duration-200 outline-1 outline-offset-2 cursor-pointer",
+                    "h-12 flex-1 hover:flex-[2] transition-[flex] duration-300 active:flex-[1.5] outline-1 outline-offset-2 cursor-pointer",
                   )}
                   onClick={() =>
                     copyToClipboard(ColorUtils.rgb2hex(v.color)?.toUpperCase())
