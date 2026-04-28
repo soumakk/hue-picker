@@ -1,6 +1,5 @@
 import { Clipboard, ClipboardCheck } from "lucide-react";
 import { useHotkeys } from "react-hotkeys-hook";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 import { cn } from "../../utils/helpers";
 import useCopyToClipboard from "../../utils/useCopyToClipboard";
 
@@ -37,10 +36,10 @@ export default function ColorCodeDisplay({
       <div className="w-12 text-sm text-neutral-600 font-medium">{type}</div>
 
       {text ? (
-        <div className="flex items-center justify-between px-4 h-full border border-neutral-200 rounded-xl font-medium text-zinc-800 select-all flex-1">
-          {text}
+        <div className="flex items-center justify-between px-4 h-full border border-neutral-200 rounded-xl font-medium text-zinc-800  flex-1">
+          <span className="select-all"> {text}</span>
 
-          <div className="bg-neutral-100 rounded-md border border-neutral-200 py-1 px-2 text-xs font-normal">
+          <div className="bg-neutral-100 rounded-md border border-neutral-200 text-neutral-500 py-1 px-2 text-xs font-semibold uppercase font-mono">
             {shortcut}
           </div>
         </div>
